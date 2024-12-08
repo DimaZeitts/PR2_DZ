@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоды</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 250px;
+            margin-right: 15px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        button:hover {
+            background-color: #c0392b;
+        }
+
+        .weather-info, .weather-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 20px;
+            width: 50%;
+        }
+
+        .weather-info h2, .weather-card h2 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+        }
+
+        .weather-info p, .weather-card p {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Прогноз погоды для маршрута</h1>
+    <form method="post">
+        <label for="city1">Введите начальную точку маршрута:</label>
+        <input type="text" id="city1" name="city1" required>
+        <br><br>
+        <label for="city2">Введите конечную точку маршрута:</label>
+        <input type="text" id="city2" name="city2" required>
+        <br><br>
+        <button type="submit">Получить прогноз</button>
+    </form>
+
+    {% if error_message %}
+        <p class="error-message">{{ error_message }}</p>
+    {% endif %}
+
+    {% for weather in weather_info %}
+        <div class="weather-card">
+            <h2>Погода в {{ weather.city }}</h2>
+            <p>Температура: {{ weather.temperature }} °C</p>
+            <p>Скорость ветра: {{ weather.wind_speed }} м/с</p>
+            <p>Вероятность осадков: {{ weather.precipitation_probability }}%</p>
+            <p>{{ weather.condition }}</p>
+        </div>
+    {% endfor %}
+</body>
+</html>
